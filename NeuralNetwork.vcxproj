@@ -127,10 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ActivationFunctions.h" />
+    <ClCompile Include="BasicMatrixNN.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Evolvable.h" />
+    <ClInclude Include="MatrixLayer.h" />
     <ClInclude Include="MatrixNetwork.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="NetworkIO.h" />
