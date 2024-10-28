@@ -17,8 +17,13 @@ public:
 	virtual void forward() = 0;
 	virtual void input() = 0;
 	virtual void output() = 0;
+	virtual void step() {
+		input();
+		forward();
+		output();
+	}
 
-	virtual NeuralNetwork* copy() const = 0;
+	virtual NeuralNetwork& copy() = 0;
 
 protected:
 	int stepCount;

@@ -43,11 +43,17 @@ public:
 	void input() override;
 	void output() override;
 
-	NeuralNetwork* copy() const override { return nullptr; }
+	MatrixNetwork& copy() override { 
+		return new MatrixNetwork(this); 
+	}
 
 protected:
 	int layerCount;
 	std::vector<Layer> layers;
+
+	MatrixNetwork(MatrixNetwork* matNet) {
+
+	}
 
 };
 

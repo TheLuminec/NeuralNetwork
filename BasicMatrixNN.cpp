@@ -19,6 +19,6 @@ void MatrixNetwork::input() {
 void MatrixNetwork::output() {
 	std::cout << stepCount << ":--------------------------------" << std::endl;
 	for (int i = 0; i < outputCount; i++) {
-		std::cout << "[" << i << "] Input: " << inputs[i] << " --> Output: " << getOutput(i) << std::endl;
+		std::cout << "[" << i << "] --> Output: " << getOutput(i) << std::endl;
 	}
 }

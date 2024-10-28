@@ -6,12 +6,10 @@
 
 int main() {
 	srand(time(0));
-	MatrixNetwork net(std::vector<int>({ 6,5,5,8,5,5,6 }));
+	MatrixNetwork net(std::vector<int>({ 30, 64, 64, 64, 8 }));
 
 	while (true) {
-		net.input();
-		net.forward();
-		net.output();
+		net.step();
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	}

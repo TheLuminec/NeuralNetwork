@@ -27,6 +27,10 @@ struct Layer {
         }
     }
 
+    Layer& copy() {
+        return new Layer(this);
+    }
+
     void forward() {
         if (prev == nullptr) {
             return;
@@ -60,6 +64,17 @@ struct Layer {
             biases[i] = d(gen);
         }
     }
+private:
+    Layer(Layer* layer, Layer* ) : 
+		size(layer->size), prev(layer->prev), 
+        values(std::vector<float>(layer->values)),
+        biases(std::vector<float>(layer->biases)),
+        weights(std::vector<std::vector<float>>(layer->weights)),
+        activation_function(layer->activation_function)
+    {
+
+    }
+
 };
 
 #endif
