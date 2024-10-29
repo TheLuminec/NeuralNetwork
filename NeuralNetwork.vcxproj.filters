@@ -44,5 +44,8 @@
     <ClInclude Include="MatrixLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DynamicNetwork.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

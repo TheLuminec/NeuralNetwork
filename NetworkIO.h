@@ -7,8 +7,6 @@
 
 class NetworkIO {
 public:
-	NetworkIO() : NetworkIO("", 0) {}
-
 	explicit NetworkIO(const std::string& modelName, const int epoch) : 
 		epoch(epoch), modelName(modelName), metadata()
 	{}

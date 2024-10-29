@@ -1,4 +1,5 @@
 #include "MatrixNetwork.h"
+#include "ActivationFunctions.h"
 #include <iostream>
 
 void MatrixNetwork::init() {
@@ -7,7 +8,7 @@ void MatrixNetwork::init() {
 		layers[i].randomWeightsAndBiases();
 	}
 
-	layers.back().activation_function = ActivationFunctions::sigmoid;
+	layers.back().activation_function = ActivationFunctions::tanh;
 }
 
 void MatrixNetwork::input() {

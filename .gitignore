@@ -5,3 +5,5 @@
 /.vs/NeuralNetwork
 /NeuralNetwork/x64/Debug
 /x64/Debug
+/x64/.vs
+/.vs/VSWorkspaceState.json

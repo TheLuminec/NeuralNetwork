@@ -1,23 +1,24 @@
 #pragma once
 #ifndef MATRIXLAYER_H
 #define MATRIXLAYER_H
-#include <memory>
 #include <vector>
 #include <functional>
 #include <random>
-#include <iostream>
 
+/**
+* @brief Layers of a MatrixNetwork
+* 
+* Stores values, weights, and nodes to simplify the network code
+*/
 struct Layer {
-    int size;
-    Layer* prev;
+    int size;                                           //Number of neurons
+    Layer* prev;                                        //Previous layer, nullptr if none
 
-    std::vector<float> values;
-    std::vector<float> biases;
-    std::vector<std::vector<float>> weights;
+    std::vector<float> values;                          //Stored values of each node
+    std::vector<float> biases;                          //Bias of each node
+	std::vector<std::vector<float>> weights;            //Two dimensional array of weights
 
-    std::function<float(float)> activation_function;
-
-    Layer() : Layer(0) {}
+    std::function<float(float)> activation_function;    //activation function of the nodes, takes and returns a float
 
     explicit Layer(int size, Layer* prev = nullptr, std::function<float(float)> activation = nullptr)
         : size(size), prev(prev), values(size), biases(size), activation_function(activation)
@@ -27,10 +28,12 @@ struct Layer {
         }
     }
 
-    Layer& copy() {
-        return new Layer(this);
+	//Creates a deep copy of the layer
+    Layer copy() const {
+        return new Layer(*this);
     }
 
+    //Feeds the network forward from the previous layer
     void forward() {
         if (prev == nullptr) {
             return;
@@ -46,6 +49,7 @@ struct Layer {
         }
     }
 
+    //temporary function to randomize the network
     void randomWeightsAndBiases() {
         if (prev == nullptr)
             return;
@@ -65,9 +69,10 @@ struct Layer {
         }
     }
 private:
-    Layer(Layer* layer, Layer* ) : 
-		size(layer->size), prev(layer->prev), 
-        values(std::vector<float>(layer->values)),
+	//Constructor to copy a Layer
+    Layer(const Layer* layer) : 
+		size(layer->size), prev(nullptr), 
+        values(std::vector<float>(layer->size)),
         biases(std::vector<float>(layer->biases)),
         weights(std::vector<std::vector<float>>(layer->weights)),
         activation_function(layer->activation_function)
