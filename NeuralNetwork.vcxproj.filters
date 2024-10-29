@@ -15,36 +15,36 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="Network\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BasicMatrixNN.cpp">
+    <ClCompile Include="Network\BasicMatrixNN.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ActivationFunctions.h">
+    <ClCompile Include="Network\ActivationFunctions.h">
       <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NeuralNetwork.h">
+    <ClInclude Include="Network\Evolvable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Evolvable.h">
+    <ClInclude Include="Network\Memory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Memory.h">
+    <ClInclude Include="Network\NetworkIO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NetworkIO.h">
+    <ClInclude Include="Network\MatrixLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MatrixNetwork.h">
+    <ClInclude Include="Network\DynamicNetwork.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MatrixLayer.h">
+    <ClInclude Include="Network\MatrixNetwork.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DynamicNetwork.h">
+    <ClInclude Include="Network\NeuralNetwork.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

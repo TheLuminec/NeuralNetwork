@@ -2,7 +2,7 @@
 #ifndef MEMORY_H
 #define MEMORY_H
 #include <vector>
-#include "NeuralNetwork.h"
+#include <NeuralNetwork.h>
 
 /**
 * @brief Gives a NeuralNetwork the ability to store values for the next step

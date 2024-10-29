@@ -127,18 +127,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ActivationFunctions.h" />
-    <ClCompile Include="BasicMatrixNN.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Network\ActivationFunctions.h" />
+    <ClCompile Include="Network\BasicMatrixNN.cpp" />
+    <ClCompile Include="Network\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Evolvable.h" />
-    <ClInclude Include="MatrixLayer.h" />
-    <ClInclude Include="MatrixNetwork.h" />
-    <ClInclude Include="Memory.h" />
-    <ClInclude Include="NetworkIO.h" />
-    <ClInclude Include="DynamicNetwork.h" />
-    <ClInclude Include="NeuralNetwork.h" />
+    <ClInclude Include="Network\Evolvable.h" />
+    <ClInclude Include="Network\MatrixLayer.h" />
+    <ClInclude Include="Network\MatrixNetwork.h" />
+    <ClInclude Include="Network\Memory.h" />
+    <ClInclude Include="Network\NetworkIO.h" />
+    <ClInclude Include="Network\DynamicNetwork.h" />
+    <ClInclude Include="Network\NeuralNetwork.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
