@@ -35,13 +35,13 @@
     <ClInclude Include="Network\NetworkIO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Network\MatrixLayer.h">
+    <ClInclude Include="Network\LinearLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Network\DynamicNetwork.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Network\MatrixNetwork.h">
+    <ClInclude Include="Network\LinearNetwork.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Network\NeuralNetwork.h">

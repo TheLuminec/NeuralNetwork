@@ -133,8 +133,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Network\Evolvable.h" />
-    <ClInclude Include="Network\MatrixLayer.h" />
-    <ClInclude Include="Network\MatrixNetwork.h" />
+    <ClInclude Include="Network\LinearLayer.h" />
+    <ClInclude Include="Network\LinearNetwork.h" />
     <ClInclude Include="Network\Memory.h" />
     <ClInclude Include="Network\NetworkIO.h" />
     <ClInclude Include="Network\DynamicNetwork.h" />

@@ -1,12 +1,12 @@
 #pragma once
-#ifndef MATRIXLAYER_H
-#define MATRIXLAYER_H
+#ifndef LINEARLAYER_H
+#define LINEARLAYER_H
 #include <vector>
 #include <functional>
 #include <random>
 
 /**
-* @brief Layers of a MatrixNetwork
+* @brief Layers of a LinearNetwork
 * 
 * Stores values, weights, and nodes to simplify the network code
 */
@@ -21,7 +21,7 @@ struct Layer {
     std::function<float(float)> activation_function;    //activation function of the nodes, takes and returns a float
 
     explicit Layer(int size, Layer* prev = nullptr, std::function<float(float)> activation = nullptr)
-        : size(size), prev(prev), values(size), biases(size), activation_function(activation)
+        : size(size), prev(prev), values(size), biases(size), activation_function(activation), weights()
     {
         if (prev != nullptr) {
             weights.resize(size, std::vector<float>(prev->size));
@@ -57,6 +57,8 @@ struct Layer {
         std::random_device rd;
         std::mt19937 gen(rd());
         std::normal_distribution<float> d(0.0f, 1.0f);
+        weights.clear();
+        weights.resize(size, std::vector<float>(prev->size));
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < prev->size; j++) {
