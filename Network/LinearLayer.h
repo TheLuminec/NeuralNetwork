@@ -44,7 +44,7 @@ struct Layer {
             for (int j = 0; j < prev->size; j++) {
                 sum += prev->values[j] * weights[i][j];
             }
-
+			sum /= prev->size;
             values[i] = activation_function ? activation_function(sum) : sum;
         }
     }
