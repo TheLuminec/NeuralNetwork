@@ -12,47 +12,39 @@
 class LinearNetwork : public virtual NeuralNetwork, public virtual Memory {
 public:
 	explicit LinearNetwork(std::vector<int> layerSizes) :
-		NeuralNetwork(layerSizes.front(), layerSizes.back()), layerCount(layerSizes.size())
+		NeuralNetwork(layerSizes.front(), layerSizes.back()), layers()
 	{
 		if (layerSizes.size() < 2) {
 			throw std::invalid_argument("A matrix network needs at least 2 layers.");
 		}
 
-		//temporaryly here for Memory
-		layerSizes.front() = inputCount;
-		layerSizes.back() = outputCount;
-
-		layers.reserve(layerCount);
-		//potential problem code as it can deallocate the pointers
-
-		Layer* prev = nullptr;
 		for (int i : layerSizes) {
-			layers.push_back(Layer(i, prev, nullptr));
-			prev = &layers.back();
+			layers.emplace_back(i);
 		}
 
 		init();
 	}
 
-	explicit LinearNetwork(const int inputCount, const int outputCount, const int maxLayers = 64, std::function<float(float)> activation = nullptr) :
-		NeuralNetwork(inputCount, outputCount), Memory(), layers(), layerCount(2)
+	explicit LinearNetwork(int inputCount, int outputCount, std::function<float(float)> activation = nullptr) :
+		NeuralNetwork(inputCount, outputCount), Memory(), layers()
 	{
-		layers.reserve(maxLayers);
-		layers.push_back(Layer(inputCount));
-		layers.push_back(Layer(outputCount, &layers.front(), activation));
-		layers.back().prev = &layers.front();
+		layers.emplace_back(Layer(inputCount));
+		layers.emplace_back(Layer(outputCount, activation));
 	}
 
 	//Function to add a hidden layer to the end of the network
 	void addLayer(int size, std::function<float(float)> activation = nullptr) {
-		Layer tmpOut = layers.back();
+		if (layers.size() < 1) {
+			throw std::runtime_error("Network input and output layers are not set.");
+		}
+
+		Layer outputLayer = layers.back();
 		layers.pop_back();
-		Layer* prev = &layers.back();
-		layers.push_back(Layer(size, prev, activation));
-		tmpOut.prev = &layers.back();
-		layers.push_back(tmpOut);
-		layerCount++;
+
+		layers.emplace_back(size, activation);
+		layers.push_back(outputLayer);
 	}
+
 
 	void addMemoryNode() {
 		inputCount++;
@@ -65,8 +57,10 @@ public:
 	}
 
 	void randomize() {
+		int prevSize = 0;
 		for (Layer& l : layers) {
-			l.randomWeightsAndBiases();
+			l.randomWeightsAndBiases(prevSize);
+			prevSize = l.size;
 		}
 	}
 
@@ -76,7 +70,6 @@ public:
 	}
 
 protected:
-	int layerCount;					// number of layers
 	std::vector<Layer> layers;		// layers inside the network
 
 	//Initialization, called when network in constructed
@@ -88,8 +81,10 @@ protected:
 	void forward() override {
 		layers.front().values = inputs;
 
+		Layer* prev = nullptr;
 		for (auto& l : layers) {
-			l.forward();
+			l.forward(prev);
+			prev = &l;
 		}
 
 		outputs = layers.back().values;
@@ -97,16 +92,13 @@ protected:
 	}
 
 	//Constructor to copy a LinearNetwork
-	LinearNetwork(const LinearNetwork* matNet) :
-		NeuralNetwork(matNet), layerCount(matNet->layerCount)
+	LinearNetwork(const LinearNetwork& matNet) :
+		NeuralNetwork(matNet)
 	{
-		layers.reserve(layerCount);
-		Layer* prev = nullptr;
-		for (auto& l : matNet->layers) {
+		layers.reserve(matNet.layers.size());
+		for (auto& l : matNet.layers) {
 			auto newLayer = l.copy();
-			newLayer.prev = prev;
 			layers.push_back(newLayer);
-			prev = &newLayer;
 		}
 	}
 
