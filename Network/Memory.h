@@ -10,22 +10,9 @@
 * Creates a memory node for the input and adds adds output neurons to store values for the next step. 
 * This memory is used for feedback connections in the neural network.
 */
-class Memory : public virtual NeuralNetwork{
-public:
-	Memory() : memorySize(0), memoryNodes() {}
-
-	//jank implementation
-	explicit Memory(const int memorySize) :
-		memorySize(memorySize), memoryNodes(memorySize)
-	{
-		inputCount += memorySize;
-		outputCount += memorySize;
-		inputs = std::vector<float>(inputCount);
-		outputs = std::vector<float>(outputCount);
-	}
+class Memory {
 
 protected:
-	int memorySize;						//Memory size
 	std::vector<float> memoryNodes;		//Stored memory nodes
 
 	//Set specific memory cell

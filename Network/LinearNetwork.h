@@ -9,24 +9,10 @@
 * @brief A neural network using feed forward layers
 * Standard feed forward weighted network.
 */
-class LinearNetwork : public virtual NeuralNetwork, public virtual Memory {
+class LinearNetwork : public NeuralNetwork, Memory {
 public:
-	explicit LinearNetwork(std::vector<int> layerSizes) :
-		NeuralNetwork(layerSizes.front(), layerSizes.back()), layers()
-	{
-		if (layerSizes.size() < 2) {
-			throw std::invalid_argument("A matrix network needs at least 2 layers.");
-		}
-
-		for (int i : layerSizes) {
-			layers.emplace_back(i);
-		}
-
-		init();
-	}
-
-	explicit LinearNetwork(int inputCount, int outputCount, std::function<float(float)> activation = nullptr) :
-		NeuralNetwork(inputCount, outputCount), Memory(), layers()
+	explicit LinearNetwork(int inputCount, int outputCount, int memorySize = 0, std::function<float(float)> activation = nullptr) :
+		NeuralNetwork(inputCount, outputCount), layers()
 	{
 		layers.emplace_back(Layer(inputCount));
 		layers.emplace_back(Layer(outputCount, activation));
@@ -45,17 +31,6 @@ public:
 		layers.push_back(outputLayer);
 	}
 
-
-	void addMemoryNode() {
-		inputCount++;
-		outputCount++;
-	}
-	void addMemoryNodes(int count) {
-		for (int i = 0; i < count; i++) {
-			addMemoryNode();
-		}
-	}
-
 	void randomize() {
 		int prevSize = 0;
 		for (Layer& l : layers) {
@@ -71,9 +46,6 @@ public:
 
 protected:
 	std::vector<Layer> layers;		// layers inside the network
-
-	//Initialization, called when network in constructed
-	void init();
 
 	void input() override;
 	void output() override;
