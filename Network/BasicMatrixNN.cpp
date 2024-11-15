@@ -1,6 +1,9 @@
 #include "LinearNetwork.h"
 #include "ActivationFunctions.h"
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <stdexcept>
 
 void LinearNetwork::input() {
 	for (int i = 0; i < inputCount; i++) {
@@ -14,3 +17,4 @@ void LinearNetwork::output() {
 		std::cout << "[" << i << "] --> Output: " << getOutput(i) << std::endl;
 	}
 }
+

@@ -8,15 +8,21 @@
 int main() {
 	srand(time(0));
 	//LinearNetwork net(std::vector<int>({ 32, 64, 64, 64, 8 }));
-	LinearNetwork net(32, 16, 0, ActivationFunctions::tanh);
-	net.addLayer(64, ActivationFunctions::relu);
-	net.addLayer(64, ActivationFunctions::tanh);
-	net.addLayer(64, ActivationFunctions::relu);
+	LinearNetwork net("TestingModel", 32, 16, ActivationFunctions::tanh, "tanh");
+	
+	net.addLayer(64, ActivationFunctions::relu, "relu");
+	net.addLayer(64, ActivationFunctions::tanh, "tanh");
+	net.addLayer(64, ActivationFunctions::relu, "relu");
 	net.randomize();
 
+	net.loadEpoch(0);
+	net.setEpoch(1);
 	while (true) {
 		net.simulate();
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+		break;
 	}
+
+	net.saveEpoch();
 }
