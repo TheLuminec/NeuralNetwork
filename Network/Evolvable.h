@@ -11,9 +11,12 @@
 */
 class Evolvable {
 public:
-	explicit Evolvable(const float mutationRate) : 
-		fitness(0.0f), mutationRate(mutationRate)
+	explicit Evolvable() : 
+		fitness(0.0f)
 	{}
+
+	//Mutates the given NeuralNetwork in a presumably good direction
+	virtual void optimize() = 0;
 
 	//Returns the fitness
 	virtual float getFitness() const { return fitness; }
@@ -23,6 +26,12 @@ public:
 
 	//Overload Operators for sorting
 
+	inline void operator=(const Evolvable& other) {
+		this->fitness = other.fitness;
+	}
+	inline bool operator==(const Evolvable& other) const {
+		return this->fitness == other.fitness;
+	}
 	inline bool operator<(const Evolvable& other) const {
 		return this->getFitness() < other.getFitness();
 	}
@@ -35,10 +44,6 @@ public:
 
 protected:
 	float fitness;			//fitness of the Network
-	float mutationRate;		//mutation rate, from 0-1 with 1 being 100%
-	
-	//Mutates the given NeuralNetwork by the mutation rate
-	virtual void mutate() = 0;
 
 	//Randomizes the given NeuralNetwork
 	virtual void randomize() = 0;

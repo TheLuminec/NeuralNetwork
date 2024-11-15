@@ -4,16 +4,17 @@
 #include "NeuralNetwork.h"
 #include "LinearLayer.h"
 #include "NetworkIO.h"
+#include "Evolvable.h"
 #include "ActivationFunctions.h"
 
 /**
 * @brief A neural network using feed forward layers
 * Standard feed forward weighted network.
 */
-class LinearNetwork : public NeuralNetwork, public NetworkIO {
+class LinearNetwork : public NeuralNetwork, public NetworkIO, public Evolvable {
 public:
 	explicit LinearNetwork(const std::string& modelName, int inputCount, int outputCount, std::function<float(float)> activation = nullptr, const std::string& activation_name = "None") :
-		NeuralNetwork(inputCount, outputCount), layers(), NetworkIO(modelName, 0)
+		NeuralNetwork(inputCount, outputCount), layers(), NetworkIO(modelName, 0), Evolvable()
 	{
 		layers.emplace_back(Layer(inputCount, nullptr, "None"));
 		layers.emplace_back(Layer(outputCount, activation, activation_name));
@@ -45,11 +46,26 @@ public:
 		return new LinearNetwork(*this);
 	}
 
+    //Constructor to copy a LinearNetwork
+    LinearNetwork(const LinearNetwork& other) :
+        NeuralNetwork(other), NetworkIO(other.modelName, other.epoch), Evolvable()
+    {
+        layers.reserve(other.layers.size());
+        for (auto& l : other.layers) {
+            auto newLayer = l.copy();
+            layers.push_back(newLayer);
+        }
+        metadata = other.metadata;
+    }
+
+    void optimize() override;
+
 protected:
 	std::vector<Layer> layers;		// layers inside the network
 
 	void input() override;
 	void output() override;
+	void fitnessCalc() override;
 
 	void forward() override {
 		layers.front().values = inputs;
@@ -61,19 +77,7 @@ protected:
 		}
 
 		outputs = layers.back().values;
-
-	}
-
-	//Constructor to copy a LinearNetwork
-	LinearNetwork(const LinearNetwork& other) :
-		NeuralNetwork(other), NetworkIO(other.modelName, other.epoch)
-	{
-		layers.reserve(other.layers.size());
-		for (auto& l : other.layers) {
-			auto newLayer = l.copy();
-			layers.push_back(newLayer);
-		}
-		metadata = other.metadata;
+        fitnessCalc();
 	}
 
     void writeToFile(const std::string& filename) const override {
